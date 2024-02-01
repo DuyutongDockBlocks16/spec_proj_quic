@@ -5,12 +5,21 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[[example]]
+name = "server"
+path = "src/server.rs"  # 示例程序文件的路径
+required-features = ["tls-rustls"]
+
+[features]
+tls-rustls = ["rustls", "proto/tls-rustls", "ring"]
+
 [dependencies]
 quinn = "0.10.2"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 rustls = { version = "0.21.0", default-features = false, features = ["quic"], optional = true }
 rcgen = "0.12.0"
 anyhow = "1.0.79"
+tracing = "0.1.10"
 
 [dev-dependencies]
 anyhow = "1.0.22"

@@ -856,6 +856,7 @@ dependencies = [
  "rustls",
  "rustls-pemfile",
  "tokio",
+ "tracing",
  "tracing-futures",
  "tracing-subscriber",
  "url",

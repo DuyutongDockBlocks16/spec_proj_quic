@@ -1,13 +1,20 @@
 #![cfg(feature = "rustls")]
 use std::{error::Error, net::SocketAddr, sync::Arc};
+use std::thread::sleep;
+use std::time::Duration;
 use anyhow;
 use quinn::{ClientConfig, Connection, Endpoint};
+use std::thread;
+// use std::time::Duration;
 
 // mod common;
 use crate::common_util;
 
 /// Runs a QUIC server bound to given address.
 pub(crate) async fn run_server(addr: SocketAddr) -> anyhow::Result<()>{
+
+    thread::sleep(Duration::from_secs(1));
+
     let (endpoint, _server_cert) = common_util::common_util::make_server_endpoint(addr).unwrap();
     // accept a single connection
     let incoming_conn = endpoint.accept().await.unwrap();
@@ -55,7 +62,7 @@ pub(crate) async fn run_client(server_addr: SocketAddr) -> Result<(), Box<dyn Er
         .await
         .unwrap();
 
-    // receive_bidirectional_stream(connection.clone()).await;
+    let timeout_duration = Duration::from_secs(10);
 
     println!("[client] connected: addr={}", connection.remote_address());
     // Dropping handles allows the corresponding objects to automatically shut down
